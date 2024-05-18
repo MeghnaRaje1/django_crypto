@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="product-list">
+    <thead>
+        <tr>
+            <th class="table-header">ID</th>
+            <th class="table-header">Ticker</th>
+            <th class="table-header">Name</th>
+            <th class="table-header">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.ticker }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+                <a href="{% url 'product_update' product.id %}" class="action-link">Edit</a>
+                <form action="{% url 'product_delete' product.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="action-button">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

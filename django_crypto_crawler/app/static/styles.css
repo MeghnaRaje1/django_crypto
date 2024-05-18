@@ -1,0 +1,91 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 10px;
+    color: #333;
+}
+
+table.product-list {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table.product-list th, table.product-list td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+table.product-list th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.action-link {
+    text-decoration: none;
+    color: blue;
+    margin-right: 5px;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+.action-link,
+button[type="submit"] {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.action-link:hover,
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.action-link {
+    margin-right: 5px;
+}
+
+
+.product-form {
+    width: 50%; 
+    margin: 0 auto; 
+    padding: 20px; 
+    background-color: #f2f2f2; 
+    border-radius: 8px; 
+}
+
+.product-form input[type="text"],
+.product-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+

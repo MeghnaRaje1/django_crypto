@@ -1,8 +1,35 @@
-from django.shortcuts import render
-from rest_framework import viewsets
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
-from .serializers import ProductSerializer
+from .forms import ProductForm
 
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+def product_list(request):
+    print("Inside product list")
+    products = Product.objects.all()
+    print(products)
+    return render(request, 'product_list.html', {'products': products})
+
+def product_create(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'product_form.html', {'form': form})
+
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'product_form.html', {'form': form})
+
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    product.delete()
+    return redirect('product_list')

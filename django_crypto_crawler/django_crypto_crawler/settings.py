@@ -57,6 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,12 +122,27 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/app/static/'
+STATICFILES_DIRS = [
+    BASE_DIR /"app" / "static",
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+# CELERY_IMPORTS = ("tasks", ) 
+# CELERY_IMPORTS = ['app.tasks']
