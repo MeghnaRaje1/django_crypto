@@ -9,6 +9,10 @@ h1 {
     text-align: center;
 }
 
+h3 {
+    text-align: center;
+}
+
 nav {
     text-align: center;
     margin-bottom: 20px;
@@ -89,3 +93,17 @@ button[type="submit"]:hover {
     border-radius: 4px;
 }
 
+.table-container {
+    width: 90%;
+    margin: 0 auto;
+    overflow-y: auto;
+    max-height: 500px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.row-count {
+    text-align: center;
+}

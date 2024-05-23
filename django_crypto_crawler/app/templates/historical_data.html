@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historical Data</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+        .table-container {
+            width: 90%;
+            margin: 0 auto;
+            overflow-y: auto;
+            max-height: 500px;
+            border: 1px solid #7475cd;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .row-count {
+            text-align: center;
+        }
+    </style>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Historical Data</h1>
+
+    <!-- Calculate the number of rows -->
+    {% with row_count=historical_data|length %}
+    <div class="row-count">
+        <h3>Total number of rows: <span id="row_count">{{ row_count }}</span></h3>
+    </div>
+    {% endwith %}
+
+    <div class="table-container">
+        <table class="product-list" id="historical_table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Timestamp</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in historical_data %}
+                <tr data-product="{{ data.product }}" data-timestamp="{{ data.timestamp }}" data-open="{{ data.open }}" data-high="{{ data.high }}" data-low="{{ data.low }}" data-close="{{ data.close }}">
+                    <td>{{ data.product }}</td>
+                    <td>{{ data.timestamp }}</td>
+                    <td>{{ data.open }}</td>
+                    <td>{{ data.high }}</td>
+                    <td>{{ data.low }}</td>
+                    <td>{{ data.close }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to check if a row with the same data already exists in the table
+        function rowExists(data) {
+            var tableRows = $('#historical_table tbody tr');
+            var exists = false;
+
+            tableRows.each(function(index, row) {
+                var rowData = {
+                    product: $(row).data('product'),
+                    timestamp: $(row).data('timestamp'),
+                    open: $(row).data('open'),
+                    high: $(row).data('high'),
+                    low: $(row).data('low'),
+                    close: $(row).data('close')
+                };
+
+                if (JSON.stringify(rowData) === JSON.stringify(data)) {
+                    exists = true;
+                    return false; // Exit the loop early if a matching row is found
+                }
+            });
+
+            return exists;
+        }
+
+        // Function to fetch data periodically and update the table
+        function fetchDataAndUpdateTable() {
+            $.ajax({
+                url: '/historical_data_json/', 
+                type: 'GET',
+                dataType: 'json', 
+                success: function(response) {
+                    
+                    if (!response || !Array.isArray(response.data)) {
+                        console.error('Unexpected response structure:', response);
+                        return;
+                    }
+
+                    var newData = response.data;
+                    var tableBody = $('#historical_table tbody');
+
+                    newData.forEach(function(data) {
+                        
+                        if (!data.timestamp || !data.product || !data.open || !data.high || !data.low || !data.close) {
+                            console.error('Unexpected data item structure:', data);
+                            return;
+                        }
+
+                        // Check if the entire row already exists in the table
+                        if (!rowExists(data)) {
+                            var row = '<tr data-product="' + data.product + '" data-timestamp="' + data.timestamp + '" data-open="' + data.open + '" data-high="' + data.high + '" data-low="' + data.low + '" data-close="' + data.close + '">' +
+                                '<td>' + data.product + '</td>' +
+                                '<td>' + data.timestamp + '</td>' +
+                                '<td>' + data.open + '</td>' +
+                                '<td>' + data.high + '</td>' +
+                                '<td>' + data.low + '</td>' +
+                                '<td>' + data.close + '</td>' +
+                                '</tr>';
+                            tableBody.prepend(row); // Prepend new row to the table
+                        }
+                    });
+
+                    // Update the row count
+                    var rowCount = tableBody.children().length;
+                    $('#row_count').text(rowCount);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+        // Set an initial delay before the first fetch
+        var initialDelay = 5000; // Adjust the initial delay as needed (e.g., 5000 ms for 5 seconds)
+
+        setTimeout(function() {
+            fetchDataAndUpdateTable();
+
+            // Fetch data every 10 seconds (for example) after the initial delay
+            setInterval(fetchDataAndUpdateTable, 10000); // Adjust the interval as needed
+        }, initialDelay);
+    </script>
+</body>
+</html>

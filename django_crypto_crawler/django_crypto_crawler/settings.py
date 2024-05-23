@@ -12,14 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-m&mmh0mj((z%)t-w%5llp%^w4-8_(%u_pdhd__!-b#u@7_i2))'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -81,8 +77,8 @@ WSGI_APPLICATION = 'django_crypto_crawler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wisdom_tree',   # Replace with your MySQL database name
-        'USER': 'root',   # Replace with your MySQL database user
+        'NAME': 'wisdom_tree',  
+        'USER': 'root',   
         'PASSWORD': 'Meghna@1996',  # Replace with your MySQL database password
         'HOST': 'localhost',   # Replace with your MySQL database host, usually 'localhost'
         'PORT': '3306',   # Replace with your MySQL database port, usually '3306'
