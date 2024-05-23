@@ -77,7 +77,7 @@ Step 4: Set Up Celery
 
 * Start RabbitMQ Server
 * Start Celery Worker: celery -A django\_crypto\_crawler worker --loglevel=info
-* Start Celery Beat: celery -A ngo\_crypto\_crawler beat -l info
+* Start Celery Beat: celery -A django\_crypto\_crawler beat -l info
 
 Step 5: Run the Django Development Server
 
@@ -86,3 +86,8 @@ Step 5: Run the Django Development Server
 Step 6: Access the Application
 
 * Open web browser and go to http://127.0.0.1:8000/ to access the application
+http://127.0.0.1:8000/historical-data/ - To display historical data with real time update
+http://127.0.0.1:8000/create/ - To add new data to product table
+
+Step 7: Testing
+To run the testcases - python3 manage.py test app
