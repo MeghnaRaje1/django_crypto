@@ -23,8 +23,16 @@ The dashboard provides an overview of the product data and historical informatio
 ### Product UI
 
 Users can perform CRUD operations on product data, including adding new products, updating existing ones, and deleting them.
+
+1. Read and Delete product table
+
 ![product](.media/img_0.png)
+
+1. Update product table
+
 ![newproduct](.media/img_4.png)
+
+3. Create product table
 ![editproduct](.media/img_6.png)
 <br>
 ### Historical Data Display
